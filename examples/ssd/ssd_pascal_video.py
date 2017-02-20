@@ -73,7 +73,7 @@ caffe_root = os.getcwd()
 # Set true if you want to start training right after generating all files.
 run_soon = True
 # The video file path
-video_file = "examples/videos/ILSVRC2015_train_00755001.mp4"
+video_file = "examples/videos/Galaga.mp4"
 
 # The parameters for the video demo
 
@@ -81,7 +81,7 @@ video_file = "examples/videos/ILSVRC2015_train_00755001.mp4"
 # If true, use batch norm for all newly added layers.
 # Currently only the non batch norm version has been tested.
 use_batchnorm = False
-num_classes = 21
+num_classes = 11
 share_location = True
 background_label_id=0
 conf_loss_type = P.MultiBoxLoss.SOFTMAX

@@ -274,7 +274,7 @@ pretrain_model = "{}_iter_{}.caffemodel".format(snapshot_prefix, max_iter)
 label_map_file = "data/VOC0712/labelmap_voc.prototxt"
 
 # MultiBoxLoss parameters.
-num_classes = 21
+num_classes = 10
 share_location = True
 background_label_id=0
 train_on_diff_gt = True
@@ -367,7 +367,7 @@ elif normalization_mode == P.Loss.FULL:
   base_lr *= 2000.
 
 # Evaluate on whole test set.
-num_test_image = 4952
+num_test_image = 13
 test_batch_size = 8
 # Ideally test_batch_size should be divisible by num_test_image,
 # otherwise mAP will be slightly off the true value.
