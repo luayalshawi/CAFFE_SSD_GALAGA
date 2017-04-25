@@ -79,6 +79,8 @@ namespace caffe {
 				//xmin player, xmax enemy = right
 				float delXRight = curr_player.xmin - it->second.xmax;
 				float delXLeft = curr_player.xmax - it->second.xmin;
+				// test
+				top_data[0] = -1;
 
 				if (it->second.ymax >= 0.40)
 				{
@@ -86,21 +88,34 @@ namespace caffe {
 					if (delXRight >=0.0 && delXRight <=0.01)
 					{
 						top_data[0] = 0;
-						return;
+						// return;
 					}
 					if (delXLeft >=0.0 && delXLeft <=0.01)
 					{
 						top_data[0] = 1;
-						return;
+						// return;
 					}
 				}
 				//shoot playerY ~= enemyY
 				if((delXRight>=0.0 && delXRight <=0.01)  || (delXLeft >=0.0 && delXLeft <=0.01)){
-					top_data[0] = 2;
-					return;
+					// test 
+					if (top_data[0] == 0)
+					{
+						top_data[0] = 3
+					}
+					else if (top_data[0] == 1)
+					{
+						top_data[0] = 4
+					}
+					else
+					{
+						top_data[0] = 2;
+						// return;
+					}
 				}
-
-
+				// test
+				if (top_data[0] != -1)
+					return;
 			}
 			top_data[0] = -1;
 	}
