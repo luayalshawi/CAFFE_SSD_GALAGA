@@ -111,6 +111,24 @@ while True:
         payload = {'keys': "f"}
         response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
         print response
+    elif decision[0]==3.0:
+        print "shoot"
+        payload = {'keys': "f"}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
+        print response
+        print "right"
+        payload = {'keys': 'x'}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
+        print response
+    elif decision[0]==4.0:
+        print "shoot"
+        payload = {'keys': "f"}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
+        print response
+        print "left"
+        payload = {'keys': 'z'}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
+        print response
 
     cv2.imshow('video', frame)
 
