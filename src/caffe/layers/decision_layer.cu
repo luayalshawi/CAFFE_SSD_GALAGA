@@ -101,11 +101,11 @@ namespace caffe {
 					// test 
 					if (top_data[0] == 0)
 					{
-						top_data[0] = 3
+						top_data[0] = 3;
 					}
 					else if (top_data[0] == 1)
 					{
-						top_data[0] = 4
+						top_data[0] = 4;
 					}
 					else
 					{
