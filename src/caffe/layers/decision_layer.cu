@@ -123,11 +123,14 @@ namespace caffe {
 
 
 			}
+
+			//if you don't see player -- do nothing
 			if(curr_player.xmin==0 && curr_player.xmax==0)
 			{
 				top_data[0] = -1;
 				return;
 			}
+
 			//prepare to attack
 			if ( (enemy.xmin > curr_player.xmin) || (curr_player.xmin <= 0.16))
 			{
