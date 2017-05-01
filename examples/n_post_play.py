@@ -3,11 +3,23 @@ import numpy as np
 import cv2
 import time
 import unirest
+import cv2.cv as cv
 cap = cv2.VideoCapture(0)
+cap.set(cv.CV_CAP_PROP_FRAME_WIDTH, int(1280))
+cap.set(cv.CV_CAP_PROP_FRAME_HEIGHT, int(720))
 
+def adjust_gamma(image, gamma=0.4):
+	# build a lookup table mapping the pixel values [0, 255] to
+	# their adjusted gamma values
+	invGamma = 1.0 / gamma
+	table = np.array([((i / 255.0) ** invGamma) * 255
+		for i in np.arange(0, 256)]).astype("uint8")
+
+	# apply gamma correction using the lookup table
+	return cv2.LUT(image, table)
 import json
 import requests
-url = 'http://192.168.0.103:5000/api/sendkeys/'
+url = 'http://192.168.0.100:5000/api/sendkeys/'
 headers = {'content-type': 'application/json'}
 def callback_function(response):
   response.code # The HTTP status code
@@ -20,8 +32,8 @@ import os
 os.chdir(caffe_root)
 import sys
 sys.path.insert(0, 'python')
-
-os.environ["GLOG_minloglevel"] ="3"
+#
+# os.environ["GLOG_minloglevel"] ="3"
 import caffe
 caffe.set_device(0)
 caffe.set_mode_gpu()
@@ -55,7 +67,7 @@ def get_labelname(labelmap, labels):
 
 
 model_def = 'models/VGGNet/VOC0712/SSD_300x300/deploy_decision.prototxt'
-model_weights = 'models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_12000.caffemodel'
+model_weights = 'models/VGGNet/VOC0712/SSD_300x300/VGG_VOC0712_SSD_300x300_iter_3000.caffemodel'
 
 net = caffe.Net(model_def,      # defines the structure of the model
                 model_weights,  # contains the trained weights
@@ -86,6 +98,7 @@ while True:
     numerate = 0
 
     image = frame
+    #image = adjust_gamma(frame)
 
 
 
@@ -95,7 +108,7 @@ while True:
 
     # Forward pass.
     decision = net.forward()['decision']
-    
+
     if(decision[0]==0.0):
         print "right"
         payload = {'keys': 'x'}
@@ -111,7 +124,16 @@ while True:
         payload = {'keys': "f"}
         response = unirest.post(url, params=json.dumps(payload), headers=headers, callback=callback_function)
         print response
-
+    elif decision[0]==10.0:
+        print "right _x"
+        payload = {'keys': "_x"}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers)#, callback=callback_function)
+        print response
+    elif decision[0]==100.0:
+        print "left _z"
+        payload = {'keys': "_z"}
+        response = unirest.post(url, params=json.dumps(payload), headers=headers)#, callback=callback_function)
+        print response
     cv2.imshow('video', frame)
 
     cv2.waitKey(1)
