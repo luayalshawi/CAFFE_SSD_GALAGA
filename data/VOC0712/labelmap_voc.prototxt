@@ -53,3 +53,8 @@ item {
  label: 10
  display_name: "enemy16"
 }
+item {
+ name: "enemy7"
+ label: 11
+ display_name: "enemy7"
+}
